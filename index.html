@@ -4,15 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reservista do Exército do Lula — Documento sem validade</title>
+
+    <title>Exército do Janones | Certificado de Militância</title>
 
     <style>
         :root {
             --green: #244c35;
+            --green-light: #e8eee0;
             --cream: #f7f4e9;
             --ink: #243128;
             --muted: #657267;
             --gold: #c4a45b;
+            --red: #a1322b;
         }
 
         * {
@@ -21,7 +24,7 @@
 
         body {
             margin: 0;
-            font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+            font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
             background: #f0f3ef;
             color: var(--ink);
         }
@@ -53,6 +56,7 @@
             background: #fff8df;
             color: #594719;
             font-size: .93rem;
+            line-height: 1.5;
         }
 
         main {
@@ -147,13 +151,13 @@
             color: var(--green);
         }
 
+        /* Certificado */
+
         .preview-wrap {
             width: 100%;
             min-width: 0;
             overflow: auto;
         }
-
-        /* CERTIFICADO */
 
         .certificate {
             position: relative;
@@ -180,16 +184,16 @@
 
         .watermark {
             position: absolute;
-            top: 43%;
+            top: 45%;
             left: 50%;
             transform: translate(-50%, -50%) rotate(-22deg);
-            color: #b83b32;
-            border: 5px solid #b83b32;
-            padding: 8px 15px;
-            font-size: clamp(.7rem, 2.1vw, 1.8rem);
+            color: var(--red);
+            border: 4px solid var(--red);
+            padding: 8px 12px;
+            font-size: clamp(.65rem, 1.8vw, 1.6rem);
             font-weight: 950;
-            letter-spacing: .08em;
-            opacity: .22;
+            letter-spacing: .05em;
+            opacity: .23;
             white-space: nowrap;
             pointer-events: none;
             z-index: 2;
@@ -204,15 +208,15 @@
         }
 
         .seal {
-            width: 68px;
-            height: 68px;
-            flex: 0 0 68px;
+            width: 64px;
+            height: 64px;
+            flex: 0 0 64px;
             border-radius: 50%;
             border: 3px solid var(--green);
             display: grid;
             place-items: center;
             color: var(--green);
-            font-size: 1.9rem;
+            font-size: 1.8rem;
             background: #e5ebd9;
         }
 
@@ -224,16 +228,16 @@
 
         .cert-heading strong {
             display: block;
-            font-size: clamp(.65rem, 1.3vw, 1.08rem);
-            line-height: 1.3;
+            font-size: clamp(.62rem, 1.3vw, 1rem);
+            line-height: 1.35;
             text-transform: uppercase;
         }
 
         .cert-heading span {
             display: block;
             margin-top: 5px;
-            font-size: .72rem;
-            letter-spacing: .08em;
+            font-size: .68rem;
+            letter-spacing: .04em;
         }
 
         .tag {
@@ -242,30 +246,30 @@
             background: #f4e5b9;
             color: #664d14;
             border: 1px solid #d3b96e;
-            padding: 3px 7px;
-            font-size: .62rem;
+            padding: 4px 7px;
+            font-size: .6rem;
             font-weight: 900;
-            letter-spacing: .05em;
+            letter-spacing: .04em;
         }
 
         .cert-body {
             display: grid;
-            grid-template-columns: minmax(0, 1fr) 115px;
-            gap: 14px;
-            padding-top: 15px;
+            grid-template-columns: minmax(0, 1fr) 110px;
+            gap: 12px;
+            padding-top: 14px;
         }
 
         .field {
             border-bottom: 1px solid #7e8f78;
-            min-height: 38px;
-            margin-bottom: 10px;
+            min-height: 36px;
+            margin-bottom: 8px;
             padding: 3px 5px;
             min-width: 0;
         }
 
         .field small {
             display: block;
-            font-size: .58rem;
+            font-size: .57rem;
             text-transform: uppercase;
             color: #61705d;
             letter-spacing: .04em;
@@ -273,20 +277,20 @@
 
         .field strong {
             display: block;
-            font-size: .9rem;
+            font-size: .86rem;
             overflow-wrap: anywhere;
         }
 
         .photo {
-            width: 115px;
-            height: 140px;
+            width: 110px;
+            height: 135px;
             border: 2px solid #7e8f78;
             background: #e4e8de;
             display: grid;
             place-items: center;
             text-align: center;
             color: #71806b;
-            font-size: .72rem;
+            font-size: .7rem;
             overflow: hidden;
         }
 
@@ -301,8 +305,8 @@
             margin-top: 6px;
             padding: 10px;
             border: 1px solid #b3c2a9;
-            background: #e8eee0;
-            font-size: .82rem;
+            background: var(--green-light);
+            font-size: .78rem;
             line-height: 1.5;
             overflow-wrap: anywhere;
         }
@@ -312,29 +316,29 @@
             align-items: end;
             justify-content: space-between;
             gap: 12px;
-            margin-top: 13px;
+            margin-top: 12px;
         }
 
         .serial {
-            font-size: .66rem;
+            font-size: .62rem;
             color: #596753;
         }
 
         .signature {
             text-align: center;
-            min-width: 135px;
+            min-width: 125px;
             border-top: 1px solid #73836c;
             padding-top: 5px;
-            font-size: .62rem;
+            font-size: .6rem;
         }
 
         .disclaimer {
-            margin-top: 12px;
+            margin-top: 10px;
             text-align: center;
-            font-size: .62rem;
-            color: #a1322b;
+            font-size: .58rem;
+            color: var(--red);
             font-weight: 900;
-            letter-spacing: .05em;
+            letter-spacing: .03em;
         }
 
         footer {
@@ -357,7 +361,7 @@
             }
 
             .cert-heading strong {
-                font-size: .9rem;
+                font-size: clamp(.75rem, 2vw, 1rem);
             }
         }
 
@@ -374,7 +378,7 @@
 
             .notice {
                 margin: 12px;
-                font-size: .86rem;
+                font-size: .85rem;
             }
 
             main {
@@ -389,11 +393,9 @@
             }
 
             .certificate {
-                width: 100%;
                 aspect-ratio: auto;
                 padding: 12px;
                 border-width: 5px;
-                border-radius: 8px;
             }
 
             .certificate::before {
@@ -401,89 +403,88 @@
             }
 
             .cert-top {
-                gap: 8px;
+                gap: 7px;
                 padding-bottom: 9px;
             }
 
             .seal {
-                width: 40px;
-                height: 40px;
-                flex-basis: 40px;
-                font-size: 1.2rem;
+                width: 38px;
+                height: 38px;
+                flex-basis: 38px;
+                font-size: 1.1rem;
                 border-width: 2px;
             }
 
             .cert-heading strong {
-                font-size: clamp(.57rem, 2.5vw, .75rem);
+                font-size: clamp(.53rem, 2.5vw, .75rem);
             }
 
             .cert-heading span {
-                font-size: .52rem;
-                letter-spacing: .02em;
+                font-size: .48rem;
+                letter-spacing: 0;
             }
 
             .tag {
-                font-size: .46rem;
+                font-size: .45rem;
                 padding: 3px 4px;
                 letter-spacing: 0;
             }
 
             .cert-body {
-                grid-template-columns: minmax(0, 1fr) 72px;
+                grid-template-columns: minmax(0, 1fr) 70px;
                 gap: 7px;
                 padding-top: 10px;
             }
 
             .field {
-                min-height: 31px;
-                margin-bottom: 7px;
+                min-height: 30px;
+                margin-bottom: 6px;
                 padding: 2px 3px;
             }
 
             .field small {
-                font-size: .45rem;
+                font-size: .44rem;
             }
 
             .field strong {
-                font-size: .65rem;
+                font-size: .62rem;
             }
 
             .photo {
-                width: 72px;
-                height: 94px;
-                font-size: .55rem;
+                width: 70px;
+                height: 92px;
+                font-size: .52rem;
             }
 
             .status {
-                margin-top: 4px;
                 padding: 7px;
-                font-size: .65rem;
+                font-size: .63rem;
+                line-height: 1.45;
             }
 
             .cert-footer {
                 margin-top: 9px;
-                gap: 8px;
+                gap: 7px;
             }
 
             .serial,
             .signature {
-                font-size: .48rem;
+                font-size: .45rem;
             }
 
             .signature {
-                min-width: 90px;
+                min-width: 85px;
             }
 
             .disclaimer {
-                font-size: .45rem;
+                font-size: .44rem;
                 letter-spacing: 0;
-                margin-top: 8px;
             }
 
             .watermark {
-                font-size: clamp(.55rem, 3vw, .9rem);
+                font-size: clamp(.5rem, 2.8vw, .85rem);
                 border-width: 2px;
-                padding: 5px 7px;
+                padding: 5px 6px;
             }
 
             .buttons {
@@ -495,7 +496,7 @@
             }
         }
 
-        /* IMPRESSÃO / SALVAR EM PDF */
+        /* IMPRESSÃO E PDF */
 
         @media print {
             @page {
@@ -546,12 +547,12 @@
             }
 
             .cert-body {
-                grid-template-columns: minmax(0, 1fr) 115px;
+                grid-template-columns: minmax(0, 1fr) 110px;
             }
 
             .photo {
-                width: 115px;
-                height: 140px;
+                width: 110px;
+                height: 135px;
             }
         }
     </style>
@@ -559,21 +560,21 @@
 
 <body>
     <header>
-        <h1>🇧🇷 Reservista do Exército do Lula</h1>
-        <p>Monte sua carteirinha de brincadeira e compartilhe com os amigos.</p>
+        <h1>🇧🇷 Exército do Janones</h1>
+        <p>Certificado de militância para os apoiadores do Lula.</p>
     </header>
 
     <div class="notice">
-        <strong>Importante:</strong>
-        este é um gerador de documento fictício, sem validade oficial.
-        Não é emitido pelo Exército Brasileiro. A marca
-        “DOCUMENTO SEM VALIDADE” aparece no certificado para evitar confusão.
+        <strong>Aviso:</strong>
+        este é um documento humorístico, criado para entretenimento.
+        Não é emitido por órgão público, partido político ou instituição militar
+        e não possui validade oficial.
     </div>
 
     <main>
         <!-- FORMULÁRIO -->
         <section class="panel form-panel">
-            <h2>Personalize o certificado</h2>
+            <h2>Personalize seu certificado</h2>
 
             <form id="form">
                 <label for="nome">Nome completo</label>
@@ -588,20 +589,25 @@
                 <label for="filiacao">Nome da mãe (opcional)</label>
                 <input id="filiacao" maxlength="70" placeholder="Nome da mãe">
 
-                <label for="patente">Cargo de brincadeira</label>
+                <label for="patente">Cargo</label>
                 <select id="patente">
-                    <option>Fiscal do Churrasco</option>
-                    <option>General do Cafezinho</option>
-                    <option>Comandante do Sofá</option>
-                    <option>Soldado da Resenha</option>
-                    <option>Ministro da Soneca</option>
+                    <option>Militante de Base</option>
+                    <option>Mobilizador Digital</option>
+                    <option>Articulador de Grupo</option>
+                    <option>Coordenador de Militância</option>
+                    <option>Defensor do Legado</option>
+                    <option>Fiscal de Fake News</option>
+                    <option>Comunicador Popular</option>
+                    <option>Organizador de Mobilizações</option>
+                    <option>Soldado da Democracia</option>
+                    <option>Comandante da Militância</option>
                 </select>
 
-                <label for="foto">Foto para a carteirinha (opcional)</label>
+                <label for="foto">Foto (opcional)</label>
                 <input id="foto" type="file" accept="image/*">
 
                 <p class="hint">
-                    A foto é carregada localmente no navegador e não é enviada para um servidor.
+                    A foto é processada no próprio navegador e não é enviada para um servidor.
                 </p>
 
                 <div class="buttons">
@@ -622,25 +628,25 @@
             </form>
         </section>
 
-        <!-- PRÉVIA DO CERTIFICADO -->
+        <!-- CERTIFICADO -->
         <section class="panel">
             <h2 class="preview-title">Prévia do certificado</h2>
 
             <div class="preview-wrap">
-                <article class="certificate" id="certificado" aria-label="Documento fictício sem validade oficial">
+                <article class="certificate" aria-label="Certificado humorístico sem validade oficial">
                     <div class="watermark">DOCUMENTO SEM VALIDADE</div>
 
                     <div class="cert-top">
                         <div class="seal" aria-hidden="true">★</div>
 
                         <div class="cert-heading">
-                            <strong>MINISTÉRIO DA DEFESA</strong>
-                            <strong>Certificado de Dispensa</strong>
-                            <strong>Exército do Lula</strong>
+                            <strong>Exército do Janones</strong>
+                            <strong>Certificado de Reconhecimento da Militância</strong>
+                            <strong>Movimento de Militantes do Lula</strong>
 
                             <span>
                                 DOCUMENTO FICTÍCIO • Nº
-                                <b id="numero">BR-2026-001</b>
+                                <b id="numero">EXJ-001</b>
                             </span>
 
                             <div class="tag">SEM VALIDADE OFICIAL</div>
@@ -650,7 +656,7 @@
                     <div class="cert-body">
                         <div>
                             <div class="field">
-                                <small>Nome do convocado</small>
+                                <small>Nome do militante</small>
                                 <strong id="outNome">Nome da pessoa</strong>
                             </div>
 
@@ -675,37 +681,39 @@
                                 SUA FOTO<br>VAI AQUI
                             </span>
 
-                            <img id="outFoto" alt="Foto escolhida para o documento fictício">
+                            <img id="outFoto" alt="Foto do participante">
                         </div>
                     </div>
 
                     <div class="status">
                         <strong>SITUAÇÃO:</strong>
-                        dispensado das tarefas de seriedade por excesso de resenha.
+                        Militante ativo do Exército do Janones.
                         <br>
 
-                        <strong>FUNÇÃO:</strong>
-                        <span id="outPatente">Fiscal do Churrasco</span>.
+                        <strong>CARGO:</strong>
+                        <span id="outPatente">Militante de Base</span>.
                         <br>
 
-                        <strong>MISSÃO:</strong>
-                        manter o bom humor, respeitar geral e nunca deixar faltar farofa.
+                        <strong>COMPROMISSO:</strong>
+                        Defender suas ideias, mobilizar apoiadores, combater a
+                        desinformação e participar da luta por um Brasil mais justo,
+                        sempre com respeito ao debate democrático.
                     </div>
 
                     <div class="cert-footer">
                         <div class="serial">
-                            Emitido para fins de zoeira.<br>
+                            Emitido para fins de entretenimento.<br>
                             Não substitui documento oficial.
                         </div>
 
                         <div class="signature">
-                            Assinatura imaginária<br>
-                            <strong>Comando Geral da Resenha</strong>
+                            Assinatura fictícia<br>
+                            <strong>Comando da Militância</strong>
                         </div>
                     </div>
 
                     <div class="disclaimer">
-                        DOCUMENTO SEM VALIDADE • DOCUMENTO FICTÍCIO • SEM VALIDADE LEGAL
+                        DOCUMENTO SEM VALIDADE • CERTIFICADO HUMORÍSTICO
                     </div>
                 </article>
             </div>
@@ -713,8 +721,8 @@
     </main>
 
     <footer>
-        Feito para brincadeira entre amigos. Use com responsabilidade
-        e não apresente como documento oficial.
+        Criado para entretenimento e brincadeira entre amigos.
+        Não representa credencial oficial de organização política ou militar.
     </footer>
 
     <script>
@@ -724,10 +732,11 @@
         let fotoUrl = null;
 
         function formatarData(valor) {
-            if (!valor) return "__/__/____";
+            if (!valor) {
+                return "__/__/____";
+            }
 
             const partes = valor.split("-");
-
             return `${partes[2]}/${partes[1]}/${partes[0]}`;
         }
 
@@ -744,7 +753,8 @@
             $("outFiliacao").textContent =
                 $("filiacao").value.trim() || "Não informado";
 
-            $("outPatente").textContent = $("patente").value;
+            $("outPatente").textContent =
+                $("patente").value;
         }
 
         form.addEventListener("submit", (event) => {
@@ -758,7 +768,7 @@
                 $(id).addEventListener("change", atualizar);
             });
 
-        // Carregar foto escolhida pelo usuário.
+        // Selecionar e exibir a foto.
         $("foto").addEventListener("change", (event) => {
             const arquivo = event.target.files &&
                 event.target.files[0];
@@ -795,7 +805,7 @@
             $("fotoPlaceholder").style.display = "none";
         });
 
-        // Limpar os campos.
+        // Limpar o formulário.
         $("limpar").addEventListener("click", () => {
             form.reset();
             atualizar();
@@ -811,15 +821,15 @@
             fotoUrl = null;
         });
 
-        // Imprimir ou salvar como PDF.
+        // Imprimir ou salvar em PDF.
         $("imprimir").addEventListener("click", () => {
             atualizar();
             window.print();
         });
 
-        // Número decorativo, sem validade oficial.
+        // Número aleatório meramente decorativo.
         $("numero").textContent =
-            "BR-2026-" + String(Math.floor(Math.random() * 900) + 100);
+            "EXJ-" + String(Math.floor(Math.random() * 90000) + 10000);
 
         atualizar();
     </script>
