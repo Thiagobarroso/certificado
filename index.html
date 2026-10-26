@@ -127,7 +127,8 @@
             margin-top: 18px;
         }
 
-        button {
+        button,
+        .btn-link {
             border: 0;
             border-radius: 9px;
             padding: 12px 15px;
@@ -135,9 +136,16 @@
             font-weight: 700;
             cursor: pointer;
             transition: transform .15s, opacity .15s;
+            text-align: center;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
 
-        button:hover {
+        button:hover,
+        .btn-link:hover {
             transform: translateY(-1px);
         }
 
@@ -157,6 +165,119 @@
             background: #e8eee8;
             color: var(--green);
             width: 100%;
+        }
+
+        /* BOTÕES DE COMPARTILHAMENTO */
+
+        .share-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .whatsapp {
+            background: #25d366;
+            color: #0b3b1f;
+            width: 100%;
+        }
+
+        .instagram {
+            background: linear-gradient(45deg, #f9ce34, #ee2a7b 50%, #6228d7);
+            color: white;
+            width: 100%;
+        }
+
+        .share-grid svg {
+            width: 18px;
+            height: 18px;
+            flex: 0 0 18px;
+            fill: currentColor;
+        }
+
+        /* AVISO DE NAVEGADOR INTERNO (INSTAGRAM, FACEBOOK ETC.) */
+
+        .inapp {
+            max-width: 1000px;
+            margin: 12px auto 0;
+            padding: 12px 16px;
+            border-radius: 10px;
+            background: #fde8e6;
+            border: 1px solid #e7a59f;
+            color: #6b1f19;
+            font-size: .9rem;
+            line-height: 1.5;
+        }
+
+        .inapp[hidden] {
+            display: none;
+        }
+
+        .inapp button {
+            margin-top: 8px;
+            background: var(--red);
+            color: white;
+            padding: 9px 13px;
+        }
+
+        /* JANELA COM A IMAGEM PRONTA */
+
+        .modal {
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            background: #10201799;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
+
+        .modal[hidden] {
+            display: none;
+        }
+
+        .modal-box {
+            background: white;
+            border-radius: 14px;
+            padding: 18px;
+            width: 100%;
+            max-width: 560px;
+            max-height: calc(100vh - 32px);
+            overflow-y: auto;
+        }
+
+        .modal-box h3 {
+            margin: 0 0 8px;
+            font-size: 1.1rem;
+        }
+
+        .modal-box p {
+            margin: 0 0 12px;
+            font-size: .9rem;
+            line-height: 1.5;
+            color: var(--muted);
+        }
+
+        .modal-box img {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: 6px;
+            border: 1px solid #d9e0d8;
+            /* Permite o "tocar e segurar" para salvar no iPhone */
+            -webkit-touch-callout: default;
+            user-select: auto;
+        }
+
+        .modal-acoes {
+            display: grid;
+            gap: 8px;
+            margin-top: 14px;
+        }
+
+        .modal-acoes [hidden] {
+            display: none;
         }
 
         .preview-wrap {
@@ -380,7 +501,8 @@
                 font-size: 1.5rem;
             }
 
-            .notice {
+            .notice,
+            .inapp {
                 margin: 12px;
                 font-size: .85rem;
             }
@@ -492,14 +614,15 @@
             }
         }
 
-        /* O DOWNLOAD ESCONDE CONTROLES EXTERNOS; O CERTIFICADO É CAPTURADO SOZINHO. */
         @media print {
 
             header,
             .notice,
+            .inapp,
             .form-panel,
             footer,
-            .preview-title {
+            .preview-title,
+            .modal {
                 display: none !important;
             }
         }
@@ -515,6 +638,15 @@
     <div class="notice">
         <strong>Aviso:</strong>
         Esse documento não possui validade oficial.
+    </div>
+
+    <!-- Aparece só quando a página é aberta dentro do Instagram/Facebook -->
+    <div class="inapp" id="avisoInApp" hidden>
+        <strong>Você está no navegador <span id="nomeApp">do Instagram</span>.</strong>
+        Ele pode bloquear downloads. Se a imagem não salvar, toque em
+        <b>⋯</b> no canto da tela e escolha <b>“Abrir no navegador”</b>.
+        <br>
+        <button type="button" id="abrirNavegador">Abrir no navegador</button>
     </div>
 
     <main>
@@ -564,8 +696,26 @@
                 </div>
 
                 <div class="buttons">
-                    <button class="primary" type="button" id="salvarImagem">
+                    <button class="primary acao" type="button" id="salvarImagem">
                         Salvar imagem (PNG)
+                    </button>
+                </div>
+
+                <div class="share-grid">
+                    <button class="whatsapp acao" type="button" id="compartilharWhats">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path
+                                d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z" />
+                        </svg>
+                        WhatsApp
+                    </button>
+
+                    <button class="instagram acao" type="button" id="compartilharInsta">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path
+                                d="M12 7.3a4.7 4.7 0 1 0 0 9.4 4.7 4.7 0 0 0 0-9.4Zm0 7.7a3 3 0 1 1 0-6 3 3 0 0 1 0 6Zm6-7.9a1.1 1.1 0 1 1-2.2 0 1.1 1.1 0 0 1 2.2 0ZM21.9 8.2c0-1.6-.4-3-1.6-4.2-1.2-1.2-2.6-1.5-4.2-1.6H7.9c-1.6.1-3 .4-4.2 1.6C2.5 5.2 2.2 6.6 2.1 8.2v7.6c.1 1.6.4 3 1.6 4.2 1.2 1.2 2.6 1.5 4.2 1.6h8.2c1.6-.1 3-.4 4.2-1.6 1.2-1.2 1.5-2.6 1.6-4.2V8.2Zm-2.1 9.7a3.3 3.3 0 0 1-1.9 1.9c-1.3.5-4.4.4-5.9.4s-4.6.1-5.9-.4a3.3 3.3 0 0 1-1.9-1.9c-.5-1.3-.4-4.4-.4-5.9s-.1-4.6.4-5.9a3.3 3.3 0 0 1 1.9-1.9c1.3-.5 4.4-.4 5.9-.4s4.6-.1 5.9.4a3.3 3.3 0 0 1 1.9 1.9c.5 1.3.4 4.4.4 5.9s.1 4.6-.4 5.9Z" />
+                        </svg>
+                        Instagram
                     </button>
                 </div>
 
@@ -597,9 +747,6 @@
                             <div class="tag">SEM VALIDADE OFICIAL</div>
                         </div>
                     </div>
-
-
-
 
                     <div class="cert-body">
                         <div>
@@ -671,6 +818,22 @@
         Criado para entretenimento não representa credencial oficial de organização política ou militar.
     </footer>
 
+    <!-- JANELA COM A IMAGEM PRONTA (usada no iPhone e nos navegadores internos) -->
+    <div class="modal" id="modal" hidden>
+        <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modalTitulo">
+            <h3 id="modalTitulo">Seu certificado está pronto</h3>
+            <p id="modalTexto"></p>
+            <img id="modalImg" alt="Certificado gerado">
+
+            <div class="modal-acoes">
+                <button class="primary" type="button" id="modalCompartilhar">Compartilhar</button>
+                <button class="secondary" type="button" id="modalBaixar">Baixar imagem</button>
+                <a class="btn-link whatsapp" id="modalWhats" target="_blank" rel="noopener">Abrir WhatsApp</a>
+                <button class="secondary" type="button" id="modalFechar">Fechar</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Biblioteca necessária para converter o certificado em PNG -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
@@ -678,10 +841,25 @@
         const $ = (id) => document.getElementById(id);
 
         const form = $("form");
-        const botaoSalvar = $("salvarImagem");
         const mensagem = $("mensagem");
+        const botoesAcao = document.querySelectorAll(".acao");
+
+        // ---------- DETECÇÃO DE DISPOSITIVO / NAVEGADOR ----------
+
+        const ua = navigator.userAgent || "";
+        const ehIOS = /iPad|iPhone|iPod/.test(ua) ||
+            (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+        const ehAndroid = /Android/i.test(ua);
+        const ehInstagram = /Instagram/i.test(ua);
+        const ehInApp = ehInstagram ||
+            /FBAN|FBAV|FB_IAB|FBIOS|Line\/|TikTok|musical_ly|Bytedance/i.test(ua);
+        const ehMobile = ehIOS || ehAndroid;
+
+        const TEXTO_WHATS = "Recebi meu certificado do Exército do Janones! Faça o seu também:";
 
         let fotoUrl = null;
+
+        // ---------- PREENCHIMENTO DO CERTIFICADO ----------
 
         function formatarData(valor) {
             if (!valor) {
@@ -692,7 +870,6 @@
             return `${partes[2]}/${partes[1]}/${partes[0]}`;
         }
 
-        // Atualiza o certificado em tempo real.
         function atualizar() {
             $("outNome").textContent =
                 $("nome").value.trim() || "Nome da pessoa";
@@ -709,24 +886,385 @@
             $("outPatente").textContent = $("patente").value;
         }
 
-        // Atualização automática ao digitar ou selecionar.
-        ["nome", "nascimento", "cidade", "filiacao", "patente"]
-            .forEach((id) => {
-                $(id).addEventListener("input", atualizar);
-                $(id).addEventListener("change", atualizar);
+        function nomeArquivo() {
+            const base = ($("nome").value.trim() || "certificado")
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+                .replace(/[^a-zA-Z0-9_-]/g, "_");
+
+            return `certificado_${base}.png`;
+        }
+
+        // ---------- GERAÇÃO DA IMAGEM ----------
+        // A imagem é gerada com antecedência (logo depois que a pessoa para de
+        // digitar). Assim, quando ela toca em "Compartilhar", o Safari ainda
+        // considera o toque válido e abre a janela de compartilhamento.
+        // Se a geração acontecer depois do toque, o iPhone bloqueia o share.
+
+        let imagemPronta = null;
+        let geracaoEmAndamento = null;
+        let versao = 0;
+        let timerPregeracao = null;
+
+        function invalidarImagem() {
+            versao++;
+            imagemPronta = null;
+            clearTimeout(timerPregeracao);
+            timerPregeracao = setTimeout(() => {
+                gerarImagem().catch(() => { });
+            }, 900);
+        }
+
+        function dataUrlParaBlob(dataUrl) {
+            const dados = atob(dataUrl.split(",")[1]);
+            const bytes = new Uint8Array(dados.length);
+
+            for (let i = 0; i < dados.length; i++) {
+                bytes[i] = dados.charCodeAt(i);
+            }
+
+            return new Blob([bytes], { type: "image/png" });
+        }
+
+        function esperarFoto() {
+            const foto = $("outFoto");
+
+            if (foto.style.display !== "block" || foto.complete) {
+                return Promise.resolve();
+            }
+
+            return new Promise((resolve) => {
+                foto.addEventListener("load", resolve, { once: true });
+                foto.addEventListener("error", resolve, { once: true });
+            });
+        }
+
+        async function gerarImagem() {
+            if (imagemPronta) return imagemPronta;
+            if (geracaoEmAndamento) return geracaoEmAndamento;
+
+            if (typeof html2canvas === "undefined") {
+                throw new Error("html2canvas não carregou");
+            }
+
+            const minhaVersao = versao;
+
+            geracaoEmAndamento = (async () => {
+                await esperarFoto();
+
+                if (document.fonts && document.fonts.ready) {
+                    await document.fonts.ready;
+                }
+
+                const elemento = $("certificado");
+
+                // Imagem final com ~1800px de largura em qualquer aparelho,
+                // sem estourar o limite de memória de canvas do iPhone.
+                const escala = Math.min(4, Math.max(2, 1800 / elemento.offsetWidth));
+
+                const canvas = await html2canvas(elemento, {
+                    scale: escala,
+                    backgroundColor: "#f7f4e9",
+                    useCORS: true,
+                    logging: false
+                });
+
+                const dataUrl = canvas.toDataURL("image/png");
+
+                let blob = await new Promise((resolve) => {
+                    if (canvas.toBlob) {
+                        canvas.toBlob(resolve, "image/png");
+                    } else {
+                        resolve(null);
+                    }
+                });
+
+                if (!blob) blob = dataUrlParaBlob(dataUrl);
+
+                const nome = nomeArquivo();
+                let arquivo = null;
+
+                try {
+                    arquivo = new File([blob], nome, { type: "image/png" });
+                } catch (e) {
+                    arquivo = null;
+                }
+
+                return { blob, arquivo, dataUrl, nome };
+            })();
+
+            let resultado;
+
+            try {
+                resultado = await geracaoEmAndamento;
+            } finally {
+                geracaoEmAndamento = null;
+            }
+
+            // Se a pessoa mudou algo enquanto gerava, gera de novo.
+            if (minhaVersao !== versao) {
+                return gerarImagem();
+            }
+
+            imagemPronta = resultado;
+            return resultado;
+        }
+
+        // ---------- SALVAR E COMPARTILHAR ----------
+
+        function podeCompartilharArquivo(img) {
+            try {
+                return !!(img.arquivo && navigator.canShare &&
+                    navigator.canShare({ files: [img.arquivo] }));
+            } catch (e) {
+                return false;
+            }
+        }
+
+        async function compartilharArquivo(img, texto) {
+            const dados = { files: [img.arquivo] };
+            if (texto) dados.text = texto;
+
+            try {
+                await navigator.share(dados);
+                return "ok";
+            } catch (erro) {
+                if (erro && erro.name === "AbortError") return "cancelado";
+                return "erro";
+            }
+        }
+
+        function baixarArquivo(img) {
+            const url = URL.createObjectURL(img.blob);
+            const link = document.createElement("a");
+
+            link.href = url;
+            link.download = img.nome;
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+
+            setTimeout(() => URL.revokeObjectURL(url), 2000);
+        }
+
+        function linkWhats() {
+            return "https://wa.me/?text=" +
+                encodeURIComponent(TEXTO_WHATS + " " + location.href);
+        }
+
+        function ocupado(sim) {
+            botoesAcao.forEach((botao) => {
+                botao.disabled = sim;
             });
 
-        // Evita recarregar a página ao enviar o formulário.
+            if (sim) mensagem.textContent = "Gerando imagem...";
+        }
+
+        // ---------- JANELA COM A IMAGEM ----------
+
+        let imagemDoModal = null;
+        let acaoDoModal = null;
+
+        function abrirModal(img, acao) {
+            imagemDoModal = img;
+            acaoDoModal = acao;
+
+            const podeShare = podeCompartilharArquivo(img);
+            const podeBaixar = !ehIOS && !ehInApp;
+            const partes = [];
+
+            if (podeShare) {
+                const destino = acao === "instagram" ? "o Instagram"
+                    : acao === "whatsapp" ? "o WhatsApp"
+                        : "“Salvar imagem”";
+
+                partes.push(`Toque em <b>Compartilhar</b> e escolha ${destino}.`);
+            }
+
+            if (ehMobile) {
+                partes.push(ehIOS
+                    ? "Ou toque e segure na imagem e escolha <b>“Adicionar às Fotos”</b>."
+                    : "Ou toque e segure na imagem e escolha <b>“Baixar imagem”</b>.");
+            } else {
+                partes.push("Clique em <b>Baixar imagem</b> para salvar.");
+            }
+
+            if (!podeShare && acao === "instagram") {
+                partes.push("Depois abra o Instagram e publique a imagem a partir da galeria (Stories ou Feed).");
+            }
+
+            if (!podeShare && acao === "whatsapp") {
+                partes.push("Depois toque em <b>Abrir WhatsApp</b> e anexe a imagem salva.");
+            }
+
+            $("modalTexto").innerHTML = partes.join(" ");
+            $("modalImg").src = img.dataUrl;
+
+            $("modalCompartilhar").hidden = !podeShare;
+            $("modalBaixar").hidden = !podeBaixar;
+            $("modalWhats").hidden = !(acao === "whatsapp" && !podeShare);
+            $("modalWhats").href = linkWhats();
+
+            $("modal").hidden = false;
+        }
+
+        function fecharModal() {
+            $("modal").hidden = true;
+            $("modalImg").removeAttribute("src");
+            imagemDoModal = null;
+        }
+
+        $("modalFechar").addEventListener("click", fecharModal);
+
+        $("modal").addEventListener("click", (event) => {
+            if (event.target === $("modal")) fecharModal();
+        });
+
+        $("modalBaixar").addEventListener("click", () => {
+            if (imagemDoModal) baixarArquivo(imagemDoModal);
+        });
+
+        // Este botão é um toque "novo", então o Safari sempre libera o share.
+        $("modalCompartilhar").addEventListener("click", async () => {
+            if (!imagemDoModal) return;
+
+            const texto = acaoDoModal === "whatsapp" ? TEXTO_WHATS : null;
+            const resultado = await compartilharArquivo(imagemDoModal, texto);
+
+            if (resultado === "ok") {
+                mensagem.textContent = "Pronto! Certificado compartilhado.";
+                fecharModal();
+            }
+        });
+
+        // ---------- AÇÃO PRINCIPAL DOS BOTÕES ----------
+
+        async function executarAcao(acao) {
+            atualizar();
+
+            const jaEstavaPronta = !!imagemPronta;
+            let img = imagemPronta;
+
+            if (!img) {
+                ocupado(true);
+
+                try {
+                    img = await gerarImagem();
+                } catch (erro) {
+                    console.error("Erro ao gerar imagem:", erro);
+                    mensagem.textContent = typeof html2canvas === "undefined"
+                        ? "Não foi possível carregar a ferramenta de imagem. Verifique sua conexão com a internet."
+                        : "Não foi possível gerar a imagem. Tente novamente.";
+                    ocupado(false);
+                    return;
+                }
+
+                ocupado(false);
+            }
+
+            mensagem.textContent = "";
+            const podeShare = podeCompartilharArquivo(img);
+
+            // SALVAR
+            if (acao === "salvar") {
+                // Computador e Chrome do Android: download normal funciona.
+                if (!ehIOS && !ehInApp) {
+                    baixarArquivo(img);
+                    mensagem.textContent =
+                        "Imagem gerada! Verifique a pasta de downloads do seu dispositivo.";
+                    return;
+                }
+
+                // iPhone / navegador interno: abre a folha de compartilhamento,
+                // onde existe a opção "Salvar imagem" (vai direto para Fotos).
+                if (podeShare && jaEstavaPronta) {
+                    const resultado = await compartilharArquivo(img);
+                    if (resultado !== "erro") return;
+                }
+
+                abrirModal(img, "salvar");
+                return;
+            }
+
+            // WHATSAPP E INSTAGRAM
+            // Nenhum dos dois aceita receber imagem por link na web.
+            // O único jeito é a folha de compartilhamento do celular.
+            if (podeShare) {
+                if (jaEstavaPronta) {
+                    const texto = acao === "whatsapp" ? TEXTO_WHATS : null;
+                    const resultado = await compartilharArquivo(img, texto);
+
+                    if (resultado === "ok") {
+                        mensagem.textContent = "Pronto! Certificado compartilhado.";
+                        return;
+                    }
+
+                    if (resultado === "cancelado") return;
+                }
+
+                // A imagem demorou a gerar e o navegador bloqueou o share:
+                // mostra a janela com um botão "Compartilhar" (novo toque).
+                abrirModal(img, acao);
+                return;
+            }
+
+            // Sem suporte a compartilhar arquivo (ex.: computador).
+            if (acao === "whatsapp" && !ehMobile) {
+                baixarArquivo(img);
+                window.open(linkWhats(), "_blank", "noopener");
+                mensagem.textContent =
+                    "A imagem foi baixada. Anexe ela na conversa do WhatsApp que abriu.";
+                return;
+            }
+
+            abrirModal(img, acao);
+        }
+
+        $("salvarImagem").addEventListener("click", () => executarAcao("salvar"));
+        $("compartilharWhats").addEventListener("click", () => executarAcao("whatsapp"));
+        $("compartilharInsta").addEventListener("click", () => executarAcao("instagram"));
+
+        // ---------- AVISO DO NAVEGADOR INTERNO ----------
+
+        if (ehInApp) {
+            $("avisoInApp").hidden = false;
+            $("nomeApp").textContent = ehInstagram ? "do Instagram" : "deste aplicativo";
+        }
+
+        $("abrirNavegador").addEventListener("click", () => {
+            const semProtocolo = location.href.replace(/^https?:\/\//, "");
+
+            if (ehAndroid) {
+                // Abre a mesma página no Chrome.
+                location.href = "intent://" + semProtocolo +
+                    "#Intent;scheme=https;package=com.android.chrome;end";
+            } else if (ehIOS) {
+                // Funciona nas versões recentes do iOS; se não abrir,
+                // o aviso já explica o caminho pelo menu ⋯.
+                location.href = "x-safari-https://" + semProtocolo;
+            }
+        });
+
+        // ---------- FORMULÁRIO ----------
+
+        ["nome", "nascimento", "cidade", "filiacao", "patente"]
+            .forEach((id) => {
+                const aoMudar = () => {
+                    atualizar();
+                    invalidarImagem();
+                };
+
+                $(id).addEventListener("input", aoMudar);
+                $(id).addEventListener("change", aoMudar);
+            });
+
         form.addEventListener("submit", (event) => {
             event.preventDefault();
             atualizar();
         });
 
-        // Seleciona e exibe a foto escolhida.
         $("foto").addEventListener("change", (event) => {
-            const arquivo = event.target.files &&
-                event.target.files[0];
-
+            const arquivo = event.target.files && event.target.files[0];
             const imagem = $("outFoto");
 
             if (!arquivo) {
@@ -735,6 +1273,7 @@
                 $("fotoPlaceholder").style.display = "block";
                 if (fotoUrl) URL.revokeObjectURL(fotoUrl);
                 fotoUrl = null;
+                invalidarImagem();
                 return;
             }
 
@@ -749,15 +1288,18 @@
             }
 
             fotoUrl = URL.createObjectURL(arquivo);
+
             imagem.onload = () => {
                 atualizar();
+                invalidarImagem();
             };
+
             imagem.src = fotoUrl;
             imagem.style.display = "block";
             $("fotoPlaceholder").style.display = "none";
+            invalidarImagem();
         });
 
-        // Limpa o formulário e a foto.
         $("limpar").addEventListener("click", () => {
             form.reset();
             atualizar();
@@ -772,74 +1314,16 @@
 
             fotoUrl = null;
             mensagem.textContent = "";
-        });
-
-        // Gera e baixa o certificado como arquivo PNG.
-        botaoSalvar.addEventListener("click", async () => {
-            atualizar();
-
-            if (typeof html2canvas === "undefined") {
-                mensagem.textContent =
-                    "Não foi possível carregar a ferramenta de imagem. Verifique sua conexão com a internet.";
-                return;
-            }
-
-            botaoSalvar.disabled = true;
-            botaoSalvar.textContent = "Gerando imagem...";
-            mensagem.textContent = "Preparando seu certificado...";
-
-            try {
-                // Aguarda a imagem da pessoa ser carregada, se houver.
-                const foto = $("outFoto");
-
-                if (foto.style.display !== "none" && !foto.complete) {
-                    await new Promise((resolve, reject) => {
-                        foto.onload = resolve;
-                        foto.onerror = reject;
-                    });
-                }
-
-                const canvas = await html2canvas($("certificado"), {
-                    scale: 3,
-                    backgroundColor: "#f7f4e9",
-                    useCORS: true,
-                    logging: false
-                });
-
-                const link = document.createElement("a");
-
-                const nomeArquivo = (
-                    $("nome").value.trim() || "certificado"
-                )
-                    .normalize("NFD")
-                    .replace(/[\u0300-\u036f]/g, "")
-                    .replace(/[^a-zA-Z0-9_-]/g, "_");
-
-                link.download = `certificado_${nomeArquivo}.png`;
-                link.href = canvas.toDataURL("image/png");
-
-                document.body.appendChild(link);
-                link.click();
-                link.remove();
-
-                mensagem.textContent =
-                    "Imagem gerada! Verifique a pasta de downloads do seu dispositivo.";
-            } catch (erro) {
-                console.error("Erro ao gerar imagem:", erro);
-                mensagem.textContent =
-                    "Não foi possível gerar a imagem. Tente novamente.";
-            } finally {
-                botaoSalvar.disabled = false;
-                botaoSalvar.textContent = "Salvar imagem (PNG)";
-            }
+            invalidarImagem();
         });
 
         // Número decorativo para identificar cada certificado gerado.
         $("numero").textContent =
             "EXJ-" + String(Math.floor(Math.random() * 90000) + 10000);
 
-        // Preenche a prévia inicial.
+        // Preenche a prévia inicial e já deixa a imagem pré-gerada.
         atualizar();
+        window.addEventListener("load", invalidarImagem);
     </script>
 </body>
 
