@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservista do Exército do Lula — Documento sem validade</title>
+
+    <style>
+        :root {
+            --green: #244c35;
+            --cream: #f7f4e9;
+            --ink: #243128;
+            --muted: #657267;
+            --gold: #c4a45b;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+            background: #f0f3ef;
+            color: var(--ink);
+        }
+
+        header {
+            background: var(--green);
+            color: white;
+            padding: 28px 18px;
+            text-align: center;
+            border-bottom: 5px solid var(--gold);
+        }
+
+        header h1 {
+            margin: 0 0 8px;
+            font-size: clamp(1.45rem, 4vw, 2.2rem);
+        }
+
+        header p {
+            margin: 0;
+            color: #e1e9e2;
+        }
+
+        .notice {
+            max-width: 1000px;
+            margin: 18px auto 0;
+            padding: 12px 16px;
+            border: 1px solid #e3c56e;
+            border-radius: 10px;
+            background: #fff8df;
+            color: #594719;
+            font-size: .93rem;
+        }
+
+        main {
+            max-width: 1100px;
+            margin: 24px auto;
+            padding: 0 16px 40px;
+            display: grid;
+            grid-template-columns: minmax(280px, 360px) minmax(0, 1fr);
+            gap: 22px;
+            align-items: start;
+        }
+
+        .panel {
+            min-width: 0;
+            background: white;
+            border: 1px solid #d9e0d8;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 8px 24px #1d382010;
+        }
+
+        .panel h2 {
+            margin: 0 0 16px;
+            font-size: 1.15rem;
+        }
+
+        label {
+            display: block;
+            margin: 13px 0 6px;
+            font-weight: 650;
+            font-size: .92rem;
+        }
+
+        input,
+        select {
+            width: 100%;
+            min-width: 0;
+            border: 1px solid #cbd5cb;
+            border-radius: 9px;
+            padding: 11px 12px;
+            font: inherit;
+            background: white;
+            color: var(--ink);
+        }
+
+        input:focus,
+        select:focus {
+            outline: 3px solid #244c3520;
+            border-color: var(--green);
+        }
+
+        input[type="file"] {
+            padding: 8px;
+            font-size: .86rem;
+        }
+
+        .hint {
+            color: var(--muted);
+            font-size: .8rem;
+            margin: 6px 0 0;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        button {
+            border: 0;
+            border-radius: 9px;
+            padding: 12px 15px;
+            font: inherit;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform .15s;
+        }
+
+        button:hover {
+            transform: translateY(-1px);
+        }
+
+        .primary {
+            background: var(--green);
+            color: white;
+            flex: 1;
+        }
+
+        .secondary {
+            background: #e8eee8;
+            color: var(--green);
+        }
+
+        .preview-wrap {
+            width: 100%;
+            min-width: 0;
+            overflow: auto;
+        }
+
+        /* CERTIFICADO */
+
+        .certificate {
+            position: relative;
+            isolation: isolate;
+            width: 100%;
+            min-width: 0;
+            aspect-ratio: 1.45;
+            background: var(--cream);
+            border: 8px double #71866f;
+            border-radius: 10px;
+            padding: 22px;
+            overflow: hidden;
+            box-shadow: 0 10px 28px #263a291a;
+        }
+
+        .certificate::before {
+            content: "";
+            position: absolute;
+            inset: 10px;
+            border: 1px solid #9cac91;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .watermark {
+            position: absolute;
+            top: 43%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-22deg);
+            color: #b83b32;
+            border: 5px solid #b83b32;
+            padding: 8px 15px;
+            font-size: clamp(.7rem, 2.1vw, 1.8rem);
+            font-weight: 950;
+            letter-spacing: .08em;
+            opacity: .22;
+            white-space: nowrap;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .cert-top {
+            display: flex;
+            gap: 14px;
+            align-items: center;
+            border-bottom: 2px solid #a9b99f;
+            padding-bottom: 12px;
+        }
+
+        .seal {
+            width: 68px;
+            height: 68px;
+            flex: 0 0 68px;
+            border-radius: 50%;
+            border: 3px solid var(--green);
+            display: grid;
+            place-items: center;
+            color: var(--green);
+            font-size: 1.9rem;
+            background: #e5ebd9;
+        }
+
+        .cert-heading {
+            text-align: center;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .cert-heading strong {
+            display: block;
+            font-size: clamp(.65rem, 1.3vw, 1.08rem);
+            line-height: 1.3;
+            text-transform: uppercase;
+        }
+
+        .cert-heading span {
+            display: block;
+            margin-top: 5px;
+            font-size: .72rem;
+            letter-spacing: .08em;
+        }
+
+        .tag {
+            display: inline-block;
+            margin-top: 7px;
+            background: #f4e5b9;
+            color: #664d14;
+            border: 1px solid #d3b96e;
+            padding: 3px 7px;
+            font-size: .62rem;
+            font-weight: 900;
+            letter-spacing: .05em;
+        }
+
+        .cert-body {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 115px;
+            gap: 14px;
+            padding-top: 15px;
+        }
+
+        .field {
+            border-bottom: 1px solid #7e8f78;
+            min-height: 38px;
+            margin-bottom: 10px;
+            padding: 3px 5px;
+            min-width: 0;
+        }
+
+        .field small {
+            display: block;
+            font-size: .58rem;
+            text-transform: uppercase;
+            color: #61705d;
+            letter-spacing: .04em;
+        }
+
+        .field strong {
+            display: block;
+            font-size: .9rem;
+            overflow-wrap: anywhere;
+        }
+
+        .photo {
+            width: 115px;
+            height: 140px;
+            border: 2px solid #7e8f78;
+            background: #e4e8de;
+            display: grid;
+            place-items: center;
+            text-align: center;
+            color: #71806b;
+            font-size: .72rem;
+            overflow: hidden;
+        }
+
+        .photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+        }
+
+        .status {
+            margin-top: 6px;
+            padding: 10px;
+            border: 1px solid #b3c2a9;
+            background: #e8eee0;
+            font-size: .82rem;
+            line-height: 1.5;
+            overflow-wrap: anywhere;
+        }
+
+        .cert-footer {
+            display: flex;
+            align-items: end;
+            justify-content: space-between;
+            gap: 12px;
+            margin-top: 13px;
+        }
+
+        .serial {
+            font-size: .66rem;
+            color: #596753;
+        }
+
+        .signature {
+            text-align: center;
+            min-width: 135px;
+            border-top: 1px solid #73836c;
+            padding-top: 5px;
+            font-size: .62rem;
+        }
+
+        .disclaimer {
+            margin-top: 12px;
+            text-align: center;
+            font-size: .62rem;
+            color: #a1322b;
+            font-weight: 900;
+            letter-spacing: .05em;
+        }
+
+        footer {
+            text-align: center;
+            padding: 0 16px 26px;
+            color: #68756b;
+            font-size: .85rem;
+        }
+
+        /* TABLETS */
+
+        @media (max-width: 900px) {
+            main {
+                grid-template-columns: 1fr;
+                max-width: 760px;
+            }
+
+            .certificate {
+                min-width: 0;
+            }
+
+            .cert-heading strong {
+                font-size: .9rem;
+            }
+        }
+
+        /* CELULARES */
+
+        @media (max-width: 600px) {
+            header {
+                padding: 22px 14px;
+            }
+
+            header h1 {
+                font-size: 1.5rem;
+            }
+
+            .notice {
+                margin: 12px;
+                font-size: .86rem;
+            }
+
+            main {
+                margin: 14px auto;
+                padding: 0 10px 28px;
+                gap: 14px;
+            }
+
+            .panel {
+                padding: 14px;
+                border-radius: 12px;
+            }
+
+            .certificate {
+                width: 100%;
+                aspect-ratio: auto;
+                padding: 12px;
+                border-width: 5px;
+                border-radius: 8px;
+            }
+
+            .certificate::before {
+                inset: 6px;
+            }
+
+            .cert-top {
+                gap: 8px;
+                padding-bottom: 9px;
+            }
+
+            .seal {
+                width: 40px;
+                height: 40px;
+                flex-basis: 40px;
+                font-size: 1.2rem;
+                border-width: 2px;
+            }
+
+            .cert-heading strong {
+                font-size: clamp(.57rem, 2.5vw, .75rem);
+            }
+
+            .cert-heading span {
+                font-size: .52rem;
+                letter-spacing: .02em;
+            }
+
+            .tag {
+                font-size: .46rem;
+                padding: 3px 4px;
+                letter-spacing: 0;
+            }
+
+            .cert-body {
+                grid-template-columns: minmax(0, 1fr) 72px;
+                gap: 7px;
+                padding-top: 10px;
+            }
+
+            .field {
+                min-height: 31px;
+                margin-bottom: 7px;
+                padding: 2px 3px;
+            }
+
+            .field small {
+                font-size: .45rem;
+            }
+
+            .field strong {
+                font-size: .65rem;
+            }
+
+            .photo {
+                width: 72px;
+                height: 94px;
+                font-size: .55rem;
+            }
+
+            .status {
+                margin-top: 4px;
+                padding: 7px;
+                font-size: .65rem;
+            }
+
+            .cert-footer {
+                margin-top: 9px;
+                gap: 8px;
+            }
+
+            .serial,
+            .signature {
+                font-size: .48rem;
+            }
+
+            .signature {
+                min-width: 90px;
+            }
+
+            .disclaimer {
+                font-size: .45rem;
+                letter-spacing: 0;
+                margin-top: 8px;
+            }
+
+            .watermark {
+                font-size: clamp(.55rem, 3vw, .9rem);
+                border-width: 2px;
+                padding: 5px 7px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            .buttons button {
+                width: 100%;
+            }
+        }
+
+        /* IMPRESSÃO / SALVAR EM PDF */
+
+        @media print {
+            @page {
+                size: landscape;
+                margin: 8mm;
+            }
+
+            body {
+                background: white;
+            }
+
+            header,
+            .notice,
+            .form-panel,
+            footer,
+            .preview-title {
+                display: none !important;
+            }
+
+            main {
+                display: block;
+                margin: 0;
+                padding: 0;
+                max-width: none;
+            }
+
+            .panel {
+                border: 0;
+                box-shadow: none;
+                padding: 0;
+            }
+
+            .preview-wrap {
+                overflow: visible;
+            }
+
+            .certificate {
+                width: 100%;
+                min-width: 0;
+                aspect-ratio: 1.45;
+                box-shadow: none;
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+            }
+
+            .cert-heading strong {
+                font-size: 1rem;
+            }
+
+            .cert-body {
+                grid-template-columns: minmax(0, 1fr) 115px;
+            }
+
+            .photo {
+                width: 115px;
+                height: 140px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>🇧🇷 Reservista do Exército do Lula</h1>
+        <p>Monte sua carteirinha de brincadeira e compartilhe com os amigos.</p>
+    </header>
+
+    <div class="notice">
+        <strong>Importante:</strong>
+        este é um gerador de documento fictício, sem validade oficial.
+        Não é emitido pelo Exército Brasileiro. A marca
+        “DOCUMENTO SEM VALIDADE” aparece no certificado para evitar confusão.
+    </div>
+
+    <main>
+        <!-- FORMULÁRIO -->
+        <section class="panel form-panel">
+            <h2>Personalize o certificado</h2>
+
+            <form id="form">
+                <label for="nome">Nome completo</label>
+                <input id="nome" maxlength="70" placeholder="Ex.: João da Silva" autocomplete="name">
+
+                <label for="nascimento">Data de nascimento</label>
+                <input id="nascimento" type="date">
+
+                <label for="cidade">Naturalidade</label>
+                <input id="cidade" maxlength="60" placeholder="Ex.: Belford Roxo - RJ">
+
+                <label for="filiacao">Nome da mãe (opcional)</label>
+                <input id="filiacao" maxlength="70" placeholder="Nome da mãe">
+
+                <label for="patente">Cargo de brincadeira</label>
+                <select id="patente">
+                    <option>Fiscal do Churrasco</option>
+                    <option>General do Cafezinho</option>
+                    <option>Comandante do Sofá</option>
+                    <option>Soldado da Resenha</option>
+                    <option>Ministro da Soneca</option>
+                </select>
+
+                <label for="foto">Foto para a carteirinha (opcional)</label>
+                <input id="foto" type="file" accept="image/*">
+
+                <p class="hint">
+                    A foto é carregada localmente no navegador e não é enviada para um servidor.
+                </p>
+
+                <div class="buttons">
+                    <button class="primary" type="submit">
+                        Atualizar certificado
+                    </button>
+
+                    <button class="secondary" type="button" id="limpar">
+                        Limpar
+                    </button>
+                </div>
+
+                <div class="buttons">
+                    <button class="secondary" type="button" id="imprimir">
+                        Imprimir / salvar em PDF
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <!-- PRÉVIA DO CERTIFICADO -->
+        <section class="panel">
+            <h2 class="preview-title">Prévia do certificado</h2>
+
+            <div class="preview-wrap">
+                <article class="certificate" id="certificado" aria-label="Documento fictício sem validade oficial">
+                    <div class="watermark">DOCUMENTO SEM VALIDADE</div>
+
+                    <div class="cert-top">
+                        <div class="seal" aria-hidden="true">★</div>
+
+                        <div class="cert-heading">
+                            <strong>MINISTÉRIO DA DEFESA</strong>
+                            <strong>Certificado de Dispensa</strong>
+                            <strong>Exército do Lula</strong>
+
+                            <span>
+                                DOCUMENTO FICTÍCIO • Nº
+                                <b id="numero">BR-2026-001</b>
+                            </span>
+
+                            <div class="tag">SEM VALIDADE OFICIAL</div>
+                        </div>
+                    </div>
+
+                    <div class="cert-body">
+                        <div>
+                            <div class="field">
+                                <small>Nome do convocado</small>
+                                <strong id="outNome">Nome da pessoa</strong>
+                            </div>
+
+                            <div class="field">
+                                <small>Data de nascimento</small>
+                                <strong id="outNascimento">__/__/____</strong>
+                            </div>
+
+                            <div class="field">
+                                <small>Naturalidade</small>
+                                <strong id="outCidade">Sua cidade - UF</strong>
+                            </div>
+
+                            <div class="field">
+                                <small>Filiação — mãe</small>
+                                <strong id="outFiliacao">Não informado</strong>
+                            </div>
+                        </div>
+
+                        <div class="photo">
+                            <span id="fotoPlaceholder">
+                                SUA FOTO<br>VAI AQUI
+                            </span>
+
+                            <img id="outFoto" alt="Foto escolhida para o documento fictício">
+                        </div>
+                    </div>
+
+                    <div class="status">
+                        <strong>SITUAÇÃO:</strong>
+                        dispensado das tarefas de seriedade por excesso de resenha.
+                        <br>
+
+                        <strong>FUNÇÃO:</strong>
+                        <span id="outPatente">Fiscal do Churrasco</span>.
+                        <br>
+
+                        <strong>MISSÃO:</strong>
+                        manter o bom humor, respeitar geral e nunca deixar faltar farofa.
+                    </div>
+
+                    <div class="cert-footer">
+                        <div class="serial">
+                            Emitido para fins de zoeira.<br>
+                            Não substitui documento oficial.
+                        </div>
+
+                        <div class="signature">
+                            Assinatura imaginária<br>
+                            <strong>Comando Geral da Resenha</strong>
+                        </div>
+                    </div>
+
+                    <div class="disclaimer">
+                        DOCUMENTO SEM VALIDADE • DOCUMENTO FICTÍCIO • SEM VALIDADE LEGAL
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        Feito para brincadeira entre amigos. Use com responsabilidade
+        e não apresente como documento oficial.
+    </footer>
+
+    <script>
+        const $ = (id) => document.getElementById(id);
+
+        const form = $("form");
+        let fotoUrl = null;
+
+        function formatarData(valor) {
+            if (!valor) return "__/__/____";
+
+            const partes = valor.split("-");
+
+            return `${partes[2]}/${partes[1]}/${partes[0]}`;
+        }
+
+        function atualizar() {
+            $("outNome").textContent =
+                $("nome").value.trim() || "Nome da pessoa";
+
+            $("outNascimento").textContent =
+                formatarData($("nascimento").value);
+
+            $("outCidade").textContent =
+                $("cidade").value.trim() || "Sua cidade - UF";
+
+            $("outFiliacao").textContent =
+                $("filiacao").value.trim() || "Não informado";
+
+            $("outPatente").textContent = $("patente").value;
+        }
+
+        form.addEventListener("submit", (event) => {
+            event.preventDefault();
+            atualizar();
+        });
+
+        ["nome", "nascimento", "cidade", "filiacao", "patente"]
+            .forEach((id) => {
+                $(id).addEventListener("input", atualizar);
+                $(id).addEventListener("change", atualizar);
+            });
+
+        // Carregar foto escolhida pelo usuário.
+        $("foto").addEventListener("change", (event) => {
+            const arquivo = event.target.files &&
+                event.target.files[0];
+
+            const imagem = $("outFoto");
+
+            if (!arquivo) {
+                imagem.removeAttribute("src");
+                imagem.style.display = "none";
+                $("fotoPlaceholder").style.display = "block";
+
+                if (fotoUrl) {
+                    URL.revokeObjectURL(fotoUrl);
+                }
+
+                fotoUrl = null;
+                return;
+            }
+
+            if (!arquivo.type.startsWith("image/")) {
+                alert("Escolha um arquivo de imagem.");
+                event.target.value = "";
+                return;
+            }
+
+            if (fotoUrl) {
+                URL.revokeObjectURL(fotoUrl);
+            }
+
+            fotoUrl = URL.createObjectURL(arquivo);
+
+            imagem.src = fotoUrl;
+            imagem.style.display = "block";
+            $("fotoPlaceholder").style.display = "none";
+        });
+
+        // Limpar os campos.
+        $("limpar").addEventListener("click", () => {
+            form.reset();
+            atualizar();
+
+            $("outFoto").removeAttribute("src");
+            $("outFoto").style.display = "none";
+            $("fotoPlaceholder").style.display = "block";
+
+            if (fotoUrl) {
+                URL.revokeObjectURL(fotoUrl);
+            }
+
+            fotoUrl = null;
+        });
+
+        // Imprimir ou salvar como PDF.
+        $("imprimir").addEventListener("click", () => {
+            atualizar();
+            window.print();
+        });
+
+        // Número decorativo, sem validade oficial.
+        $("numero").textContent =
+            "BR-2026-" + String(Math.floor(Math.random() * 900) + 100);
+
+        atualizar();
+    </script>
+</body>
+
+</html>
