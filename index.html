@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <meta name="theme-color" content="#244c35">
     <title>Exército do Janones | Certificado de Militância</title>
 
     <style>
@@ -117,13 +117,14 @@
             color: var(--muted);
             font-size: .8rem;
             margin: 6px 0 0;
+            line-height: 1.5;
         }
 
         .buttons {
             display: flex;
             gap: 10px;
             flex-wrap: wrap;
-            margin-top: 20px;
+            margin-top: 18px;
         }
 
         button {
@@ -133,31 +134,37 @@
             font: inherit;
             font-weight: 700;
             cursor: pointer;
-            transition: transform .15s;
+            transition: transform .15s, opacity .15s;
         }
 
         button:hover {
             transform: translateY(-1px);
         }
 
+        button:disabled {
+            opacity: .6;
+            cursor: wait;
+            transform: none;
+        }
+
         .primary {
             background: var(--green);
             color: white;
-            flex: 1;
+            width: 100%;
         }
 
         .secondary {
             background: #e8eee8;
             color: var(--green);
+            width: 100%;
         }
-
-        /* Certificado */
 
         .preview-wrap {
             width: 100%;
             min-width: 0;
-            overflow: auto;
         }
+
+        /* CERTIFICADO */
 
         .certificate {
             position: relative;
@@ -346,6 +353,7 @@
             padding: 0 16px 26px;
             color: #68756b;
             font-size: .85rem;
+            line-height: 1.5;
         }
 
         /* TABLETS */
@@ -354,10 +362,6 @@
             main {
                 grid-template-columns: 1fr;
                 max-width: 760px;
-            }
-
-            .certificate {
-                min-width: 0;
             }
 
             .cert-heading strong {
@@ -486,27 +490,10 @@
                 border-width: 2px;
                 padding: 5px 6px;
             }
-
-            .buttons {
-                flex-direction: column;
-            }
-
-            .buttons button {
-                width: 100%;
-            }
         }
 
-        /* IMPRESSÃO E PDF */
-
+        /* O DOWNLOAD ESCONDE CONTROLES EXTERNOS; O CERTIFICADO É CAPTURADO SOZINHO. */
         @media print {
-            @page {
-                size: landscape;
-                margin: 8mm;
-            }
-
-            body {
-                background: white;
-            }
 
             header,
             .notice,
@@ -514,45 +501,6 @@
             footer,
             .preview-title {
                 display: none !important;
-            }
-
-            main {
-                display: block;
-                margin: 0;
-                padding: 0;
-                max-width: none;
-            }
-
-            .panel {
-                border: 0;
-                box-shadow: none;
-                padding: 0;
-            }
-
-            .preview-wrap {
-                overflow: visible;
-            }
-
-            .certificate {
-                width: 100%;
-                min-width: 0;
-                aspect-ratio: 1.45;
-                box-shadow: none;
-                print-color-adjust: exact;
-                -webkit-print-color-adjust: exact;
-            }
-
-            .cert-heading strong {
-                font-size: 1rem;
-            }
-
-            .cert-body {
-                grid-template-columns: minmax(0, 1fr) 110px;
-            }
-
-            .photo {
-                width: 110px;
-                height: 135px;
             }
         }
     </style>
@@ -566,9 +514,7 @@
 
     <div class="notice">
         <strong>Aviso:</strong>
-        este é um documento humorístico, criado para entretenimento.
-        Não é emitido por órgão público, partido político ou instituição militar
-        e não possui validade oficial.
+        Esse documento não possui validade oficial.
     </div>
 
     <main>
@@ -607,24 +553,23 @@
                 <input id="foto" type="file" accept="image/*">
 
                 <p class="hint">
-                    A foto é processada no próprio navegador e não é enviada para um servidor.
+                    A prévia é atualizada automaticamente. A foto é processada no
+                    navegador e não é enviada para um servidor.
                 </p>
 
                 <div class="buttons">
-                    <button class="primary" type="submit">
-                        Atualizar certificado
-                    </button>
-
                     <button class="secondary" type="button" id="limpar">
-                        Limpar
+                        Limpar formulário
                     </button>
                 </div>
 
                 <div class="buttons">
-                    <button class="secondary" type="button" id="imprimir">
-                        Imprimir / salvar em PDF
+                    <button class="primary" type="button" id="salvarImagem">
+                        Salvar imagem (PNG)
                     </button>
                 </div>
+
+                <p class="hint" id="mensagem" role="status" aria-live="polite"></p>
             </form>
         </section>
 
@@ -633,7 +578,7 @@
             <h2 class="preview-title">Prévia do certificado</h2>
 
             <div class="preview-wrap">
-                <article class="certificate" aria-label="Certificado humorístico sem validade oficial">
+                <article class="certificate" id="certificado" aria-label="Certificado humorístico sem validade oficial">
                     <div class="watermark">DOCUMENTO SEM VALIDADE</div>
 
                     <div class="cert-top">
@@ -695,9 +640,8 @@
                         <br>
 
                         <strong>COMPROMISSO:</strong>
-                        Defender suas ideias, mobilizar apoiadores, combater a
-                        desinformação e participar da luta por um Brasil mais justo,
-                        sempre com respeito ao debate democrático.
+                        Defender ideias, mobilizar apoiadores e combater a
+                        desinformação
                     </div>
 
                     <div class="cert-footer">
@@ -721,14 +665,19 @@
     </main>
 
     <footer>
-        Criado para entretenimento e brincadeira entre amigos.
-        Não representa credencial oficial de organização política ou militar.
+        Criado para entretenimento não representa credencial oficial de organização política ou militar.
     </footer>
+
+    <!-- Biblioteca necessária para converter o certificado em PNG -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
     <script>
         const $ = (id) => document.getElementById(id);
 
         const form = $("form");
+        const botaoSalvar = $("salvarImagem");
+        const mensagem = $("mensagem");
+
         let fotoUrl = null;
 
         function formatarData(valor) {
@@ -740,6 +689,7 @@
             return `${partes[2]}/${partes[1]}/${partes[0]}`;
         }
 
+        // Atualiza o certificado em tempo real.
         function atualizar() {
             $("outNome").textContent =
                 $("nome").value.trim() || "Nome da pessoa";
@@ -753,22 +703,23 @@
             $("outFiliacao").textContent =
                 $("filiacao").value.trim() || "Não informado";
 
-            $("outPatente").textContent =
-                $("patente").value;
+            $("outPatente").textContent = $("patente").value;
         }
 
-        form.addEventListener("submit", (event) => {
-            event.preventDefault();
-            atualizar();
-        });
-
+        // Atualização automática ao digitar ou selecionar.
         ["nome", "nascimento", "cidade", "filiacao", "patente"]
             .forEach((id) => {
                 $(id).addEventListener("input", atualizar);
                 $(id).addEventListener("change", atualizar);
             });
 
-        // Selecionar e exibir a foto.
+        // Evita recarregar a página ao enviar o formulário.
+        form.addEventListener("submit", (event) => {
+            event.preventDefault();
+            atualizar();
+        });
+
+        // Seleciona e exibe a foto escolhida.
         $("foto").addEventListener("change", (event) => {
             const arquivo = event.target.files &&
                 event.target.files[0];
@@ -779,11 +730,7 @@
                 imagem.removeAttribute("src");
                 imagem.style.display = "none";
                 $("fotoPlaceholder").style.display = "block";
-
-                if (fotoUrl) {
-                    URL.revokeObjectURL(fotoUrl);
-                }
-
+                if (fotoUrl) URL.revokeObjectURL(fotoUrl);
                 fotoUrl = null;
                 return;
             }
@@ -799,13 +746,15 @@
             }
 
             fotoUrl = URL.createObjectURL(arquivo);
-
+            imagem.onload = () => {
+                atualizar();
+            };
             imagem.src = fotoUrl;
             imagem.style.display = "block";
             $("fotoPlaceholder").style.display = "none";
         });
 
-        // Limpar o formulário.
+        // Limpa o formulário e a foto.
         $("limpar").addEventListener("click", () => {
             form.reset();
             atualizar();
@@ -819,18 +768,74 @@
             }
 
             fotoUrl = null;
+            mensagem.textContent = "";
         });
 
-        // Imprimir ou salvar em PDF.
-        $("imprimir").addEventListener("click", () => {
+        // Gera e baixa o certificado como arquivo PNG.
+        botaoSalvar.addEventListener("click", async () => {
             atualizar();
-            window.print();
+
+            if (typeof html2canvas === "undefined") {
+                mensagem.textContent =
+                    "Não foi possível carregar a ferramenta de imagem. Verifique sua conexão com a internet.";
+                return;
+            }
+
+            botaoSalvar.disabled = true;
+            botaoSalvar.textContent = "Gerando imagem...";
+            mensagem.textContent = "Preparando seu certificado...";
+
+            try {
+                // Aguarda a imagem da pessoa ser carregada, se houver.
+                const foto = $("outFoto");
+
+                if (foto.style.display !== "none" && !foto.complete) {
+                    await new Promise((resolve, reject) => {
+                        foto.onload = resolve;
+                        foto.onerror = reject;
+                    });
+                }
+
+                const canvas = await html2canvas($("certificado"), {
+                    scale: 3,
+                    backgroundColor: "#f7f4e9",
+                    useCORS: true,
+                    logging: false
+                });
+
+                const link = document.createElement("a");
+
+                const nomeArquivo = (
+                    $("nome").value.trim() || "certificado"
+                )
+                    .normalize("NFD")
+                    .replace(/[\u0300-\u036f]/g, "")
+                    .replace(/[^a-zA-Z0-9_-]/g, "_");
+
+                link.download = `certificado_${nomeArquivo}.png`;
+                link.href = canvas.toDataURL("image/png");
+
+                document.body.appendChild(link);
+                link.click();
+                link.remove();
+
+                mensagem.textContent =
+                    "Imagem gerada! Verifique a pasta de downloads do seu dispositivo.";
+            } catch (erro) {
+                console.error("Erro ao gerar imagem:", erro);
+                mensagem.textContent =
+                    "Não foi possível gerar a imagem. Tente novamente.";
+            } finally {
+                botaoSalvar.disabled = false;
+                botaoSalvar.textContent = "Salvar imagem (PNG)";
+            }
         });
 
-        // Número aleatório meramente decorativo.
+        // Número decorativo para identificar cada certificado gerado.
         $("numero").textContent =
             "EXJ-" + String(Math.floor(Math.random() * 90000) + 10000);
 
+        // Preenche a prévia inicial.
         atualizar();
     </script>
 </body>
